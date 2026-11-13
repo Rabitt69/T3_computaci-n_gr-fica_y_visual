@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#101923"><title>Operación Extracción — FPS</title><link rel="stylesheet" href="./style.css"></head>
+<body><main id="game"><canvas id="scene" aria-label="Juego FPS Operación Extracción"></canvas><div class="shade"></div>
+<header class="hud"><div class="brand"><span class="mark">X</span><span>OPERACIÓN <b>EXTRACCIÓN</b></span></div><div class="mission"><span class="pulse"></span> SECTOR INFESTADO <small>•</small> <span id="meters">0 m</span></div><div class="right">ELIMINADOS <b id="kills">0</b></div></header>
+<section class="status"><div class="status-row"><span>SALUD</span><b id="health-value">100%</b></div><div class="bar"><i id="health"></i></div><div class="status-row second"><span>PROGRESO A EXTRACCIÓN</span></div><div class="bar progress"><i id="progress"></i></div></section>
+<div class="crosshair"><i></i><i></i><i></i><i></i></div><div class="weapon"><span id="weapon-label">FUSIL M4</span><b id="ammo">18 / 18</b><small>1 / 2 · CAMBIAR ARMA</small></div>
+<div class="lock-hint" id="lock-hint">WASD MOVER · ARRASTRA EL MOUSE PARA MIRAR · CLIC DISPARAR · 1/2 CAMBIAR ARMA</div><div class="toast" id="toast"></div><div class="boot-error hidden" id="boot-error" role="alert"></div>
+<section class="card end hidden" id="end-card"><span class="eyebrow">MISIÓN FINALIZADA</span><h2 id="end-title">GAME OVER</h2><p id="end-copy"></p><button id="restart-button">VOLVER A JUGAR <b>↗</b></button></section>
+<footer><span>OBJETIVO: LLEGAR A LA ZONA VERDE</span><span>RECARGA: RECOGE CAJAS DE SUMINISTROS</span></footer></main>
+<script>
+window.__GAME_READY = false;
+window.reportGameIssue = message => {
+  const panel = document.querySelector('#boot-error');
+  panel.textContent = message;
+  panel.classList.remove('hidden');
+};
+window.addEventListener('error', event => {
+  if (!window.__GAME_READY) window.reportGameIssue(`No inició el juego: ${event.message || 'falló la carga de un archivo JavaScript'}. Abre la consola del navegador para ver el detalle.`);
+});
+window.addEventListener('unhandledrejection', event => {
+  if (!window.__GAME_READY) window.reportGameIssue(`Falló la carga de Three.js: ${String(event.reason)}`);
+});
+setTimeout(() => {
+  if (!window.__GAME_READY) window.reportGameIssue('Three.js no respondió. Revisa la conexión a Internet y la consola del navegador; este proyecto carga Three.js desde jsDelivr.');
+}, 5000);
+</script>
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}
+</script>
+<script type="module" src="./main.js"></script></body></html>
